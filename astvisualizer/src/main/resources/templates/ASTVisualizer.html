@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script th:src="@{/js/ASTVisualizer.js}" defer></script>
+    <link rel="stylesheet" th:href="@{/css/ASTVisualizer.css}">
+    <title>AST Visualizer</title>
+</head>
+
+<body>
+
+    <div class="center">
+        <h1 class="header-title">
+            AST Visualizer
+        </h1>
+    </div>
+
+    <div class="content">
+
+        <div class="left center">
+            <textarea id="code" name="code" rows="50" cols="90"></textarea>
+            <button onclick="getCode()">Submit</button>
+        </div>
+
+        <div class="right center" id="image">
+            <img class="image" src="https://onlinejpgtools.com/images/examples-onlinejpgtools/baby-duck-lossy.jpeg"
+                 alt="Image">
+        </div>
+
+    </div>
+
+</body>
+
+</html>
