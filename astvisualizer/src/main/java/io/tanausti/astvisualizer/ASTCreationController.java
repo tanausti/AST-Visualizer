@@ -5,81 +5,95 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.io.IOException;
+
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ASTCreationController {    
-    
-    //call when user submits code
-    @PostMapping("/parse")
-    public void clangASTDump(@RequestBody String code) {
+public class ASTCreationController {
 
-        Path codeFile = null;
-        try {
-            codeFile = Files.createTempFile("code", ".c");
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            Files.writeString(codeFile, code);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+	@PostMapping("/parse")
+	public String ASTJSONResponse(@RequestBody String code) {
+		
+		String astDump = clangASTDump(code);
+		
+		ASTParser astParser = new ASTParser();
+		String json = astParser.parseAST(astDump);
+		
+		return json;
+		
+		
+	}
 
-        ProcessBuilder pb = new ProcessBuilder(
-            "clang",
-            "-Xclang",
-            "-ast-dump",
-            "-fsyntax-only",
-            codeFile.toString()
-        );
-        
-        System.out.print(codeFile);
+	
+	// call when user submits code
+	private String clangASTDump(String code) {
 
-        // Merge standard error stream with standard output stream
-        pb.redirectErrorStream(true);
-        
-        invokeClang(pb);
-        
-    }
-    
-    private void invokeClang(ProcessBuilder pb) {
-        
-        try {
-            // Start the process
-            Process process = pb.start();
+		Path codeFile = null;
+		try {
+			codeFile = Files.createTempFile("code", ".c");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			Files.writeString(codeFile, code);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-            // Read the output of the command
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
-                }
-            }
+		ProcessBuilder pb = new ProcessBuilder("clang", "-Xclang", "-ast-dump=json", "-fsyntax-only", codeFile.toString());
 
-            // Wait for the process to complete and get the exit code
-            int exitCode = process.waitFor();
-            System.out.println("\nExited with error code: " + exitCode);
+		System.out.print(codeFile);
 
-        } catch (IOException e) {
-            System.err.println("Failed to execute command: " + e.getMessage());
-        } catch (InterruptedException e) {
-            System.err.println("Process was interrupted: " + e.getMessage());
-            Thread.currentThread().interrupt(); // Restore interrupted status
-        }
+		// Merge standard error stream with standard output stream
+		pb.redirectErrorStream(true);
 
+		String astDump = invokeClang(pb);
+		
+		
+		return astDump;
 
-    }    
-        
-       
-    }
-       
-        
-        
+	}
 
+	private String invokeClang(ProcessBuilder pb) {
 
-    
+		try {
+			// Start the process
+			Process process = pb.start();
+			
+			StringBuilder sb;
+
+			// Read the output of the command
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+
+				sb = new StringBuilder();
+				String line;
+				
+				while ((line = reader.readLine()) != null) {
+					sb.append(line + "\n");
+				}
+				
+			
+			}
+
+			// Wait for the process to complete and get the exit code
+			int exitCode = process.waitFor();
+			System.out.println("\nExited with error code: " + exitCode);
+			
+			return sb.toString();
+
+		} catch (IOException e) {
+			System.err.println("Failed to execute command: " + e.getMessage());
+		} catch (InterruptedException e) {
+			System.err.println("Process was interrupted: " + e.getMessage());
+			Thread.currentThread().interrupt(); // Restore interrupted status
+		}
+		
+		return null;
+		
+
+	}
+
+}

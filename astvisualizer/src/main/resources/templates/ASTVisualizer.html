@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script th:src="@{/js/ASTVisualizer.js}" defer></script>
+    <script th:src="@{/js/VisualizeTree.js}" defer></script>
+
     <link rel="stylesheet" th:href="@{/css/ASTVisualizer.css}">
     <title>AST Visualizer</title>
 </head>
@@ -18,13 +21,13 @@
     <div class="content">
 
         <div class="left center">
-            <textarea id="code" name="code" rows="50" cols="90"></textarea>
+            <textarea id="code" rows="50" cols="90"></textarea>
             <button onclick="getCode()">Submit</button>
         </div>
 
-        <div class="right center" id="image">
-            <img class="image" src="https://onlinejpgtools.com/images/examples-onlinejpgtools/baby-duck-lossy.jpeg"
-                 alt="Image">
+
+        <div class="right center" id="tree">
+			<svg id="tree-svg" width="800" height="600"></svg>
         </div>
 
     </div>
