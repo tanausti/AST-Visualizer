@@ -12,24 +12,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ASTCreationController {
+public class AstCreationController {
 
 	@PostMapping("/parse")
-	public String ASTJSONResponse(@RequestBody String code) {
+	public String generateAstfromCode(@RequestBody String code) {
 		
-		String astDump = clangASTDump(code);
+		String astDumpJson = clangAstDump(code);
 		
-		ASTParser astParser = new ASTParser();
-		String json = astParser.parseAST(astDump);
+		AstParser AstParser = new AstParser();
+		String finalAst = AstParser.parseAst(astDumpJson);
 		
-		return json;
-		
+		return finalAst;
 		
 	}
 
 	
 	// call when user submits code
-	private String clangASTDump(String code) {
+	private String clangAstDump(String code) {
 
 		Path codeFile = null;
 		try {
@@ -52,7 +51,6 @@ public class ASTCreationController {
 
 		String astDump = invokeClang(pb);
 		
-		
 		return astDump;
 
 	}
@@ -72,7 +70,7 @@ public class ASTCreationController {
 				String line;
 				
 				while ((line = reader.readLine()) != null) {
-					sb.append(line + "\n");
+					sb.append(line).append("\n");
 				}
 				
 			

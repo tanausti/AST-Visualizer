@@ -1,6 +1,5 @@
 function getCode() {
     const code = document.getElementById("code").value;
-    clearText();
     sendCode(code);
 }
 

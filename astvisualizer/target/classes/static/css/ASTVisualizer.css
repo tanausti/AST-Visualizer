@@ -52,15 +52,42 @@ body {
     align-items: center;
 }
 
-
-#code {
-    width: 90%;
-    height: 80%;
-    resize: none;
+.compiler-button {
+  display: block;
+  width: 50vw;
+  height: 2vw;
+  box-sizing: border-box; /* Includes padding & borders in width */
+  margin: 0;
 }
 
-.image {
-  width: 90%;
-  height: 80%;
-  object-fit: contain;
+.left-compiler-button{
+	color: black;
+	background-color: tomato
+}
+
+.right-compiler-button{
+	color: black;
+	background-color: orange
+}
+
+
+#tree-container {
+	width: 0%;
+	height: 0%;
+    overflow: auto;
+    border: 2px solid black;
+	cursor:grab
+}
+#tree-svg {
+    width: 0%;
+    height: 0%;
+}
+
+#tree-svg:active {
+    cursor: grabbing;
+}
+
+#code {
+    width: 0%;
+    height: 0;
 }
