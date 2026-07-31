@@ -19,10 +19,17 @@ public class AstCreationController {
 		
 		String astDumpJson = clangAstDump(code);
 		
-		AstParser AstParser = new AstParser();
-		String finalAst = AstParser.parseAst(astDumpJson);
+		if(astDumpJson == null) {
+			return "ERROR";
+		}
+		else {
 		
-		return finalAst;
+			AstParser astParser = new AstParser();
+			String finalAst = astParser.parseAst(astDumpJson);
+			return finalAst;
+		}
+		
+		
 		
 	}
 
@@ -80,7 +87,13 @@ public class AstCreationController {
 			int exitCode = process.waitFor();
 			System.out.println("\nExited with error code: " + exitCode);
 			
-			return sb.toString();
+			
+			if(exitCode == 0) {
+				return sb.toString();
+			}
+			else {
+				return null;
+			}
 
 		} catch (IOException e) {
 			System.err.println("Failed to execute command: " + e.getMessage());

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>AST Visualizer</title>
+    <title>Abstract Syntax Tree Visualizer</title>
 
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script th:src="@{/js/ASTVisualizer.js}" defer></script>
@@ -13,12 +13,10 @@
 </head>
 
 <body>
-
     <div class="center">
-        <h1 class="header-title">AST Visualizer</h1>
+        <h1 class="header-title">C Abstract Syntax Tree Visualizer</h1>
+		<h2 class = "header-title">An educational tool for building compilers</h2>
     </div>
-
-
     <div class="flex-container center-horizontal">
         <button class="compiler-button left-compiler-button">
             Clang
@@ -28,26 +26,21 @@
             Custom Compiler (Kiln)
         </button>
     </div>
-
-
     <div class="content">
-
         <div class="left center">
             <textarea id="code"></textarea>
-            <button onclick="getCode()">Submit</button>
+            <button id = "submit-button" onclick="getCode()">Submit</button>
         </div>
-
-
         <div class="right center">
-
-            <div id="tree-container">
+	
+            <div class = "center" id="tree-container">
+				<p id="errorText">
+					    Failed to parse code!
+					</p>
                 <svg id="tree-svg"></svg>
             </div>
-
         </div>
-
     </div>
-
 </body>
 
 </html>

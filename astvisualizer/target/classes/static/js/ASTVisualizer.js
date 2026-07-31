@@ -11,12 +11,23 @@ function sendCode(code) {
         },
         body: code
     })
-    .then(response => response.json())
-    .then(tree => {
-        console.log(tree);
-        visualizeTree(tree);
-    });
+    .then(response => response.text())
+	.then(result => {
+	        if (result === "ERROR") {
+	            console.log("Parsing failed.");
+				document.getElementById("errorText").style.display = "block";
+				//add a clear tree func
+				const svg = d3.select("#tree-svg");
+				svg.selectAll("*").remove();
+	        } else {
+				document.getElementById("errorText").style.display = "none";
+	            const tree = JSON.parse(result);
+	            visualizeTree(tree);
+	        }
+	    });
 }
+
+
 
 function clearText() {
     document.getElementById("code").value = "";
