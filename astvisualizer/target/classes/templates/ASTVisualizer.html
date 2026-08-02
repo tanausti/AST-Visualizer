@@ -13,34 +13,67 @@
 </head>
 
 <body>
+
     <div class="center">
         <h1 class="header-title">C Abstract Syntax Tree Visualizer</h1>
-		<h2 class = "header-title">An educational tool for building compilers</h2>
+        <h2 class="header-title">An educational tool for building compilers</h2>
     </div>
+
     <div class="flex-container center-horizontal">
-        <button class="compiler-button left-compiler-button">
+        <button
+            onclick="setButtonPressedColor(id); setButtonUnpressedColor('kiln-button');"
+            id="clang-button"
+            class="compiler-button left-compiler-button">
             Clang
         </button>
-
-        <button class="compiler-button right-compiler-button">
+        <button
+            onclick="setButtonPressedColor(id); setButtonUnpressedColor('clang-button');"
+            id="kiln-button"
+            class="compiler-button right-compiler-button">
             Custom Compiler (Kiln)
         </button>
     </div>
     <div class="content">
+
         <div class="left center">
             <textarea id="code"></textarea>
-            <button id = "submit-button" onclick="getCode()">Submit</button>
+            <button id="submit-button" onclick="getCode()">Submit</button>
         </div>
-        <div class="right center">
-	
-            <div class = "center" id="tree-container">
-				<p id="errorText">
-					    Failed to parse code!
-					</p>
-                <svg id="tree-svg"></svg>
+
+        <div class="right">
+
+            <div class="viewer">
+
+                <div id="tree-container" class="center">
+                    <svg id="tree-svg"></svg>
+                </div>
+
+                <textarea readonly id="json"></textarea>
+			
+				<p id="errorText"></p>
+
             </div>
+			
+
+            <div class="button-row">
+				<button
+				    id="graphic-ast-button"
+				    onclick="setButtonPressedColor(id); setButtonUnpressedColor('json-tree-button'); show('tree-container'); show('tree-svg'); hide('json');">
+				    Visual AST
+				</button>
+
+				<button
+				    id="json-tree-button"
+				    onclick="setButtonPressedColor(id); setButtonUnpressedColor('graphic-ast-button'); show('json'); hide('tree-container'); hide('tree-svg');">
+				    JSON
+				</button>
+            </div>
+
         </div>
+
     </div>
+
 </body>
 
 </html>
+

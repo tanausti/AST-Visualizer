@@ -1,10 +1,10 @@
-.header-title {
-    border-bottom: 2px solid black;
-    width: 100%;
-    margin: 0 auto;
-	text-align: center;
-}
 
+.header-title {
+	width: 100vw;
+    border-bottom: 2px solid black;
+	margin: 0 auto;
+    text-align: center;
+}
 
 body {
     margin: 0;
@@ -16,9 +16,7 @@ body {
 .content {
     flex: 1;
     display: flex;
-    position: relative;
 }
-
 
 .left {
     border-right: 2px solid black;
@@ -29,16 +27,15 @@ body {
 }
 
 .right {
-    display: flex;
     flex: 1;
-    min-width: 0;
-    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
 
 .center {
     display: flex;
-	flex-direction: column;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -53,46 +50,72 @@ body {
     align-items: center;
 }
 
-#errorText{
-	position: absolute;
-	display: none;
+#errorText {
+    position: absolute;
+	left: 45%;
+	bottom: 50%;
+    display: none;
 }
 
 .compiler-button {
-  width: 50vw;
-  height: 2.5vw;
-  box-sizing: border-box; /* Includes padding & borders in width */
-  margin: 0;
-  border: 2px solid black;
-  cursor: pointer;
-  transition: transform 0.05s ease, filter 0.1s ease, box-shadow 0.1s ease;
+    width: 50vw;
+    height: 2.5vw;
+    box-sizing: border-box;
+    margin: 0;
+    cursor: pointer;
+    transition: transform 0.05s ease, filter 0.1s ease, box-shadow 0.1s ease;
 }
 
+
 .compiler-button:hover {
-  filter: brightness(1.1);
+    filter: brightness(1.1);
 }
 
 .compiler-button:active {
-  transform: translateY(1px) scale(0.99);
-  filter: brightness(0.8);
-  box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.4);
+    transform: translateY(1px) scale(0.99);
+    filter: brightness(0.8);
+    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.4);
 }
 
-.left-compiler-button {
-  color: black;
-}
-
+.left-compiler-button,
 .right-compiler-button {
-  color: black;
+    color: black;
 }
 
+
+.viewer {
+    width: 90%;
+    flex: 1;
+    position: relative;
+    margin-top: 20px;
+}
 
 #tree-container {
-	width: 90%;
-	height: 85%;
-    overflow: auto;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     border: 2px solid black;
-	cursor:grab;
+    overflow: auto;
+    box-sizing: border-box;
+	display: block;
+}
+
+
+
+#json {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid black;
+    overflow: auto;
+    box-sizing: border-box;
+	display: none;
+}
+
+#tree-container {
+    cursor: grab;
 }
 
 #tree-svg {
@@ -104,12 +127,31 @@ body {
     cursor: grabbing;
 }
 
-#code {
+
+.button-row {
     width: 90%;
-    height: 80%;
+    display: flex;
+	margin-bottom: 20px;
 }
 
-#submit-button{
-	width:90%;
-	height:5%;
+#graphic-ast-button,
+#json-tree-button {
+    flex: 1;
+    height: 40px;
 }
+
+
+#code {
+    width: 90%;
+	flex: 1;
+	position: relative;
+	margin-top: 20px;
+}
+
+#submit-button {
+    width: 90%;
+    height: 40px;
+	margin-bottom: 20px;
+}
+
+

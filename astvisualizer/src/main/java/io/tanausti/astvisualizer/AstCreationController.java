@@ -1,6 +1,7 @@
 package io.tanausti.astvisualizer;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,7 +37,7 @@ public class AstCreationController {
 	
 	// call when user submits code
 	private String clangAstDump(String code) {
-
+		
 		Path codeFile = null;
 		try {
 			codeFile = Files.createTempFile("code", ".c");
@@ -49,9 +50,8 @@ public class AstCreationController {
 			e.printStackTrace();
 		}
 
-		ProcessBuilder pb = new ProcessBuilder("clang", "-Xclang", "-ast-dump=json", "-fsyntax-only", codeFile.toString());
 
-		System.out.print(codeFile);
+		ProcessBuilder pb = new ProcessBuilder("clang", "-Xclang", "-ast-dump=json", "-fsyntax-only", codeFile.toString());
 
 		// Merge standard error stream with standard output stream
 		pb.redirectErrorStream(true);
