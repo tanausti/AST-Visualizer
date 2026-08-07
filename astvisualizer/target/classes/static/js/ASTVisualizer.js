@@ -1,6 +1,7 @@
 document.getElementById('clang-button').click();
 document.getElementById('graphic-ast-button').click();
 
+
 function getCode() {
     const code = document.getElementById("code").value;
 	
@@ -17,8 +18,11 @@ function getCode() {
 	}
 }
 
+
 function sendCode(code) {
-    fetch("/parse", {
+    let endpoint = "/parse/" + mode;
+
+    fetch(endpoint, {
         method: "POST",
         headers: {
             "Content-Type": "text/plain"
@@ -26,41 +30,49 @@ function sendCode(code) {
         body: code
     })
     .then(response => response.text())
-	.then(result => {
-	        if (result === "ERROR") {
-	            console.log("Parsing failed.");
-				document.getElementById("errorText").textContent = "Failed to parse code!";
-				document.getElementById("errorText").style.display = "block";
-				document.getElementById("json").value = "";
+    .then(result => {
+        if (result === "ERROR") {
+            console.log("Parsing failed.");
+            document.getElementById("errorText").textContent = "Failed to parse code!";
+            document.getElementById("errorText").style.display = "block";
+            document.getElementById("json").value = "";
 
-				const svg = d3.select("#tree-svg");
-				svg.selectAll("*").remove();
-	        } else {
-				document.getElementById("errorText").style.display = "none";
-	            const tree = JSON.parse(result);
-	
-	            visualizeTree(tree);
-				visualizeJson(result);
-				
-	        }
-	    });
+            const svg = d3.select("#tree-svg");
+            svg.selectAll("*").remove();
+        } else {
+            document.getElementById("errorText").style.display = "none";
+
+            const tree = JSON.parse(result);
+
+            visualizeTree(tree);
+            visualizeJson(result);
+        }
+    });
 }
 
+function setModeClang() {
+    mode = "clang";
+}
+
+function setModeKiln() {
+    mode = "kiln";
+}
 function visualizeJson(result){
 	document.getElementById("json").value = result;
 }
-
 
 function clearText() {
     document.getElementById("code").value = "";
 }
 
-function setButtonPressedColor(id){
+function setButtonPressedColors(id){
 	document.getElementById(id).style.backgroundColor = "lightgray";
+	document.getElementById(id).style.color = "black";
 }
 
-function setButtonUnpressedColor(id){
+function setButtonUnpressedColors(id){
 	document.getElementById(id).style.backgroundColor = "";
+	document.getElementById(id).style.color = "white";
 }
 
 function hide(id){
@@ -70,3 +82,4 @@ function hide(id){
 function show(id){
 	document.getElementById(id).style.display = "block";
 }
+

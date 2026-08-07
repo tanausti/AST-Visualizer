@@ -21,13 +21,13 @@
 
     <div class="flex-container center-horizontal">
         <button
-            onclick="setButtonPressedColor(id); setButtonUnpressedColor('kiln-button');"
+            onclick="setModeClang(); setButtonPressedColors('clang-button'); setButtonUnpressedColors('kiln-button');"
             id="clang-button"
             class="compiler-button left-compiler-button">
             Clang
         </button>
         <button
-            onclick="setButtonPressedColor(id); setButtonUnpressedColor('clang-button');"
+            onclick="setModeKiln(); setButtonPressedColors('kiln-button'); setButtonUnpressedColors('clang-button');"
             id="kiln-button"
             class="compiler-button right-compiler-button">
             Custom Compiler (Kiln)
@@ -58,13 +58,13 @@
             <div class="button-row">
 				<button
 				    id="graphic-ast-button"
-				    onclick="setButtonPressedColor(id); setButtonUnpressedColor('json-tree-button'); show('tree-container'); show('tree-svg'); hide('json');">
+				    onclick="setButtonPressedColors(id); setButtonUnpressedColors('json-tree-button'); show('tree-container'); show('tree-svg'); hide('json');">
 				    Visual AST
 				</button>
 
 				<button
 				    id="json-tree-button"
-				    onclick="setButtonPressedColor(id); setButtonUnpressedColor('graphic-ast-button'); show('json'); hide('tree-container'); hide('tree-svg');">
+				    onclick="setButtonPressedColors(id); setButtonUnpressedColors('graphic-ast-button'); show('json'); hide('tree-container'); hide('tree-svg');">
 				    JSON
 				</button>
             </div>
