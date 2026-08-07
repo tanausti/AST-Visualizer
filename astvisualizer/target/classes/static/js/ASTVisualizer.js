@@ -4,22 +4,31 @@ document.getElementById('graphic-ast-button').click();
 
 function getCode() {
     const code = document.getElementById("code").value;
-	
-	if (code === "") {
-	        document.getElementById("errorText").textContent = "Please enter some code!";
-	        document.getElementById("errorText").style.display = "block";			document.getElementById("json").value = "";
 
-							const svg = d3.select("#tree-svg");
-							svg.selectAll("*").remove();
-	        return;
-	}
-	else{
-    	sendCode(code);
-	}
+    if (code === "") {
+        document.getElementById("errorText").textContent = "Please enter some code!";
+        document.getElementById("errorText").style.display = "block";
+        document.getElementById("json").value = "";
+
+        const svg = d3.select("#tree-svg");
+        svg.selectAll("*").remove();
+        return;
+    } else if (code.length > 1000) {
+        document.getElementById("errorText").textContent = "Code must be 1000 characters or less.";
+        document.getElementById("errorText").style.display = "block";
+        document.getElementById("json").value = "";
+
+        const svg = d3.select("#tree-svg");
+        svg.selectAll("*").remove();
+        return;
+    } else {
+        sendCode(code);
+    }
 }
 
 
 function sendCode(code) {
+	
     let endpoint = "/parse/" + mode;
 
     fetch(endpoint, {
